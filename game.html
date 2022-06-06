@@ -1,0 +1,290 @@
+<HTML>
+  <head>
+    <title>Game</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  </head>
+  <body>
+    <p>Money: $<span id="Nmoney">0</span></p> 
+    <table>
+      <tr>
+        <td><button onclick="Mfuel()">Collect fuel <span id="Nfuel">0</span></button></td>
+        <td><button onclick="More()">Mine ore <span id="Nore">0</span></button></td>
+        <td><button id="Bingot" onclick="Mingot()">Make ingot <span id="Ningot">0</span></button></td>
+      </tr>
+      <tr>
+        <td><button id="Bfuel" onclick="Mcollect()">Buy collector <span id="Ncollect">0</span></button></td>
+        <td><button id="Bore" onclick="Mmine()">Buy Miner <span id="Nmine">0</span></button></td>
+        <td><button id="BBingot" onclick="Mmake()">Buy maker <span id="Nmake">0</span></button></td>
+      </tr>
+      <tr>
+        <td><p>Cost: $<span id="NCcollect">5</span></p></td>
+        <td><p>Cost: $<span id="NCmine">5</span></p></td>
+        <td><p>Cost: $<span id="NCmake">10</span></p></td>
+      </tr>
+    </table>
+    <button id="Bupgrade1" onclick="multiF()">2x Collector speed</button> <span id="upgrade1">Cost: $3000</span> <p></p>
+    <button id="Bupgrade2" onclick="multiO()">2x Miner speed</button> <span id="upgrade2">Cost: $3000</span> <p></p>
+    <button id="Bupgrade3" onclick="multiI()">2x Maker speed</button> <span id="upgrade3">Cost: $3500</span> <p></p>
+    <button id="Bupgrade4" onclick="ingotupgrade()"><span id="multi">2</span>x Ingot value</button> Cost: $ <span id="upgrade4">5000</span> <p></p>
+    <p></p><button id="Bsell" onclick="sellAll()">Sell all ingots</button>
+    <br><br>
+    <button onclick="save()">Save</button>
+    <button onclick="load()">Load</button>
+    <audio autoplay>
+      <source src="assets/music.ogg" type="audio/ogg">
+      <source src="assets/music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element. 
+    </audio>
+    <p>Game © 2022 is licensed under CC BY-ND 4.0</p>
+    <script>
+      var money = 0;
+      var fuel = 0;
+      var ore = 0;
+      var ingot = 0;
+      var Cfuel = 5;
+      var Core = 5;
+      var Cingot = 10;
+      var collect = 0;
+      var mine = 0;
+      var make = 0;
+      var Ocollector = 1;
+      var Ominer = 1;
+      var Omaker = 1;
+      var ingotmulti = 1;
+      var ingotupc = 5000;
+      
+      var cookies = document.cookie
+        .split(';')
+        .map(cookie => cookie.split('='))
+        .reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: decodeURIComponent(value) }), {});
+      
+      function load() {
+      	money = +(cookies.money);
+      	document.getElementById("Nmoney").innerHTML = money;
+        fuel = +(cookies.fuel);
+        document.getElementById("Nfuel").innerHTML = fuel;
+        ore = +(cookies.ore);
+        document.getElementById("Nore").innerHTML = ore;
+        ingot = +(cookies.ingot);
+        document.getElementById("Ningot").innerHTML = ingot;
+        Cfuel = +(cookies.Cfuel);
+        document.getElementById("NCcollect").innerHTML = Cfuel;
+        Core = +(cookies.Core);
+        document.getElementById("NCmine").innerHTML = Core;
+        Cingot = +(cookies.Cingot);
+        document.getElementById("NCmake").innerHTML = Cingot;
+        collect = +(cookies.collect);
+        document.getElementById("Ncollect").innerHTML = collect;
+        mine = +(cookies.mine);
+        document.getElementById("Nmine").innerHTML = mine;
+        make = +(cookies.make);
+        document.getElementById("Nmake").innerHTML = make;
+        Ocollector = +(cookies.Ocollector);
+        Omaker = +(cookies.Omaker);
+        Ominer = +(cookies.Ominer);
+        ingotupc = +(cookies.ingotupc);
+        document.getElementById("upgrade4").innerHTML = ingotupc;
+        ingotmulti = +(ccookies.ingotmulti);
+        document.getElementById("multi").innerHTML = ingotmulti;
+      }
+      function savee(cname, cvalue, exdays) {
+      const d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      let expires = "expires="+ d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+      function save() {
+        savee("money", money, 365);
+        savee("fuel", fuel, 365);
+        savee("ore", ore, 365);
+        savee("ingot", ingot, 365);
+        savee("Cfuel", Cfuel, 365);
+        savee("Core", Core, 365);
+        savee("Cingot", Cingot, 365);
+        savee("collect", collect, 365);
+        savee("mine", mine, 365);
+        savee("make", make, 365);
+        savee("Ocollector", Ocollector, 365);
+        savee("Ominer", Ominer, 365);
+        savee("Omaker", Omaker, 365);
+        savee("ingotmulti", ingotmulti, 365);
+        savee("ingotupc", ingotupc, 365);
+      }
+      function Mfuel() {
+        fuel = fuel + 1;
+        document.getElementById("Nfuel").innerHTML = fuel;
+      }
+      function More() {
+        ore = ore + 1;
+        document.getElementById("Nore").innerHTML = ore;
+      }
+      function Mingot() {
+        if (fuel >= 1 && ore >= 1) {
+          ore = ore - 1;
+          fuel = fuel - 1;
+          ingot = ingot + 1;
+          document.getElementById("Ningot").innerHTML = ingot;
+          document.getElementById("Nore").innerHTML = ore;
+          document.getElementById("Nfuel").innerHTML = fuel;
+        }
+      }
+      function sellAll () {
+        if (ingot >= 1) {
+          money = money + (ingot * ingotmulti);
+          ingot = 0;
+          document.getElementById("Ningot").innerHTML = ingot;
+          document.getElementById("Nmoney").innerHTML = money;
+        }
+      }
+      function Mcollect() {
+        if(money >= Cfuel) {
+          collect = collect + 1;
+          money = money - Cfuel;
+          Cfuel = Math.round(Cfuel * 1.22)
+          document.getElementById("Nmoney").innerHTML = money;
+          document.getElementById("Ncollect").innerHTML = collect;
+          document.getElementById("NCcollect").innerHTML = Cfuel;
+        }
+      }
+      function Mmine() {
+        if(money >= Core) {
+          mine = mine + 1;
+          money = money - Core;
+          Core = Math.round(Core * 1.22)
+          document.getElementById("Nmoney").innerHTML = money;
+          document.getElementById("Nmine").innerHTML = mine;
+          document.getElementById("NCmine").innerHTML = Core;
+        }
+      }
+      function Mmake() {
+        if(money >= Cingot) {
+          make = make + 1;
+          money = money - Cingot;
+          Cingot = Math.round(Cingot * 1.22)
+          document.getElementById("Nmoney").innerHTML = money;
+          document.getElementById("Nmake").innerHTML = make;
+          document.getElementById("NCmake").innerHTML = Cingot;
+        }
+      }
+      function multiF() {
+        if (money >= 3000) {
+          money = money - 3000;
+          Ocollector = 2;
+          document.getElementById("Bupgrade1").disabled = true;
+          document.getElementById("upgrade1").innerHTML = "Bought";
+          document.getElementById("Nmoney").innerHTML = money;
+        }
+      }
+      function multiO() {
+        if (money >= 3000) {
+          money = money - 3000;
+          Ominer = 2;
+          document.getElementById("Bupgrade2").disabled = true;
+          document.getElementById("upgrade2").innerHTML = "Bought";
+          document.getElementById("Nmoney").innerHTML = money;
+        }
+      }
+      function multiI() {
+        if (money >= 3500) {
+          money = money - 3500;
+          Omaker = 2;
+          document.getElementById("Bupgrade3").disabled = true;
+          document.getElementById("upgrade3").innerHTML = "Bought";
+          document.getElementById("Nmoney").innerHTML = money;
+        }
+      }
+      function ingotupgrade() {
+        if (money >= ingotupc) {
+          money = money - ingotupc;
+          ingotmulti = ingotmulti + 1;
+          ingotupc = ingotupc * 2
+          document.getElementById("Nmoney").innerHTML = money;
+          document.getElementById("multi").innerHTML = ingotmulti + 1;
+          document.getElementById("upgrade4").innerHTML = ingotupc;
+        }
+      }
+      setInterval(function() {
+        fuel = fuel + (collect * Ocollector);
+        document.getElementById("Nfuel").innerHTML = fuel;
+      }, 1000)
+      setInterval(function() {
+        ore = ore + (mine * Ominer);
+        document.getElementById("Nore").innerHTML = ore;
+      }, 1000)
+      setInterval(function() {
+        if (fuel >= (make * Omaker) && ore >= (make * Omaker) && ore >= 1 && fuel >= 1) {
+          ingot = ingot + (make * Omaker);
+          fuel = fuel - (make * Omaker);
+          ore = ore - (make * Omaker);
+          document.getElementById("Nmake").innerHTML = make;
+          document.getElementById("Nore").innerHTML = ore;
+          document.getElementById("Nfuel").innerHTML = fuel;
+          document.getElementById("Ningot").innerHTML = ingot;
+        }
+      }, 1000)
+      setInterval(function() {
+        if (ore >= 1 && fuel >= 1) {
+          document.getElementById("Bingot").disabled = false;
+        }else {
+          document.getElementById("Bingot").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (ingot >= 1) {
+          document.getElementById("Bsell").disabled = false;
+        }else {
+          document.getElementById("Bsell").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= Cfuel) {
+          document.getElementById("Bfuel").disabled = false;
+        }else {
+          document.getElementById("Bfuel").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= ingotupc) {
+          document.getElementById("Bupgrade4").disabled = false;
+        }else {
+          document.getElementById("Bupgrade4").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= Core) {
+          document.getElementById("Bore").disabled = false;
+        }else {
+          document.getElementById("Bore").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= Cingot) {
+          document.getElementById("BBingot").disabled = false;
+        }else {
+          document.getElementById("BBingot").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= 3000 && Ocollector <= 1) {
+          document.getElementById("Bupgrade1").disabled = false;
+        }else {
+          document.getElementById("Bupgrade1").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= 3000 && Ominer <= 1) {
+          document.getElementById("Bupgrade2").disabled = false;
+        }else {
+          document.getElementById("Bupgrade2").disabled = true;
+        }
+      }, 10)
+      setInterval(function() {
+        if (money >= 3500 && Omaker <= 1) {
+          document.getElementById("Bupgrade3").disabled = false;
+        }else {
+          document.getElementById("Bupgrade3").disabled = true;
+        }
+      }, 10)
+    </script>
+  </body>
+</HTML>
