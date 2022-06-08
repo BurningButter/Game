@@ -12,7 +12,7 @@
         <td><button id="Bingot" onclick="Mingot()">Make ingot <span id="Ningot">0</span></button></td>
       </tr>
       <tr>
-        <td><button id="Bfuel" onclick="Mcollect()">Buy collector<a draggable="true" ondragend="rosebud(100)"> </a><span id="Ncollect">0</span></button></td>
+        <td><button id="Bfuel" onclick="Mcollect()">Buy collector<a draggable="true" ondragend="rosebud()"> </a><span id="Ncollect">0</span></button></td>
         <td><button id="Bore" onclick="Mmine()">Buy Miner <span id="Nmine">0</span></button></td>
         <td><button id="BBingot" onclick="Mmake()">Buy maker <span id="Nmake">0</span></button></td>
       </tr>
@@ -56,7 +56,7 @@
       var ingotupc = 5000;
       
       function rosebud(sim) {
-        money = money + sim + ingot;
+        money = money + ingot * (2 * ingotmulti);
         document.getElementById("Nmoney").innerHTML = money;
       }
       
