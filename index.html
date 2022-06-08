@@ -4,7 +4,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   </head>
   <body>
-    <p>Money: $<span id="Nmoney">0</span></p> 
+    <p>Money: $<span id="Nmoney">0</span></p>
     <table>
       <tr>
         <td><button onclick="Mfuel()">Collect fuel <span id="Nfuel">0</span></button></td>
@@ -12,7 +12,7 @@
         <td><button id="Bingot" onclick="Mingot()">Make ingot <span id="Ningot">0</span></button></td>
       </tr>
       <tr>
-        <td><button id="Bfuel" onclick="Mcollect()">Buy collector <span id="Ncollect">0</span></button></td>
+        <td><button id="Bfuel" onclick="Mcollect()">Buy collector<a draggable="true" ondragend="rosebud(100)"> </a><span id="Ncollect">0</span></button></td>
         <td><button id="Bore" onclick="Mmine()">Buy Miner <span id="Nmine">0</span></button></td>
         <td><button id="BBingot" onclick="Mmake()">Buy maker <span id="Nmake">0</span></button></td>
       </tr>
@@ -54,6 +54,11 @@
       var Omaker = 1;
       var ingotmulti = 1;
       var ingotupc = 5000;
+      
+      function rosebud(sim) {
+        money = money + sim;
+        document.getElementById("Nmoney").innerHTML = money;
+      }
       
       var cookies = document.cookie
         .split(';')
