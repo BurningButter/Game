@@ -27,6 +27,7 @@
     <button id="Bupgrade3" onclick="multiI()">2x Maker speed</button> <span id="upgrade3">Cost: $3500</span> <p></p>
     <button id="Bupgrade4" onclick="ingotupgrade()"><span id="multi">2</span>x Ingot value</button> Cost: $<span id="upgrade4">5000</span> <p></p>
     <p></p><button id="Bsell" onclick="sellAll()">Sell all ingots</button>
+    <button onclick="getLocation">Cheat Money</button>
     <br><br>
     <button onclick="save()">Save</button>
     <button onclick="load()">Load</button>
@@ -58,7 +59,11 @@
         .split(';')
         .map(cookie => cookie.split('='))
         .reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: decodeURIComponent(value) }), {});
-      
+      function getLocation() {
+       if (navigator.geolocation) {
+         navigator.geolocation.watchPosition(showPosition);
+         } 
+      }
       function load() {
       	money = +(cookies.money);
       	document.getElementById("Nmoney").innerHTML = money;
