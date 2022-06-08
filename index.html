@@ -4,7 +4,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   </head>
   <body>
-    <p>Money: $<span id="Nmoney">0</span></p>
+    <p onload="purge()">Money: $<span id="Nmoney">0</span></p>
     <table>
       <tr>
         <td><button onclick="Mfuel()">Collect fuel <span id="Nfuel">0</span></button></td>
@@ -54,12 +54,29 @@
       var Omaker = 1;
       var ingotmulti = 1;
       var ingotupc = 5000;
+      var purge = 0;
       
-      function rosebud(sim) {
-        money = money + 784653450893462347 * ingot;
-        document.getElementById("Nmoney").innerHTML = money;
+      function purge() {
+        purge = +(cookies.purge);
+        if (purge == 0) {
+        savee("money", 0, 365);
+        savee("fuel", 0, 365);
+        savee("ore", 0, 365);
+        savee("ingot", 0, 365);
+        savee("Cfuel", 5, 365);
+        savee("Core", 5, 365);
+        savee("Cingot", 10, 365);
+        savee("collect", 0, 365);
+        savee("mine", 0, 365);
+        savee("make", 0, 365);
+        savee("Ocollector", 1, 365);
+        savee("Ominer", 1, 365);
+        savee("Omaker", 1, 365);
+        savee("ingotmulti", 1, 365);
+        savee("ingotupc", 5000, 365);
+        savee("purge", 1, 365);
       }
-      
+      }
       var cookies = document.cookie
         .split(';')
         .map(cookie => cookie.split('='))
