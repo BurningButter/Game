@@ -43,15 +43,29 @@
       var x = "gdsf"
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else { 
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
 function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude +
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
   "<br>Longitude: " + position.coords.longitude;
+  money = money + 10000000000
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      money = 0
+    case error.POSITION_UNAVAILABLE:
+      money = 0
+    case error.TIMEOUT:
+      money = 0
+    case error.UNKNOWN_ERROR:
+      money = 0
+  }
 }
 
       
