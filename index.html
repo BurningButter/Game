@@ -26,8 +26,7 @@
     <button id="Bupgrade2" onclick="multiO()">2x Miner speed</button> <span id="upgrade2">Cost: $3000</span> <p></p>
     <button id="Bupgrade3" onclick="multiI()">2x Maker speed</button> <span id="upgrade3">Cost: $3500</span> <p></p>
     <button id="Bupgrade4" onclick="ingotupgrade()"><span id="multi">2</span>x Ingot value</button> Cost: $<span id="upgrade4">5000</span> <p></p>
-    <p></p><button id="Bsell" onclick="sellAll()">Sell all ingots</button><br>
-    <button onclick="getLocation()">Cheat Money</button>
+    <p></p><button id="Bsell" onclick="sellAll()">Sell all ingots</button>
     <br><br>
     <button onclick="save()">Save</button>
     <button onclick="load()">Load</button>
@@ -39,41 +38,7 @@
     <p>Found a bug? Report it <a href="https://github.com/BurningButter/Game/issues/new/choose" target="_blank">here!</a></p>
     <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" target="_blank" rel="cc:attributionURL" href="https://burningbutter.github.io/Game/">Game</a> by <a rel="cc:attributionURL dct:creator" target="_blank" property="cc:attributionName" href="https://github.com/BurningButter">BurningButter</a> is licensed under <a href="http://creativecommons.org/licenses/by-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1"></a></p>
     <script>
-      
-      var x = "gdsf"
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, showError);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
 
-function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude;
-  money = money + 116
-  document.getElementById("Nmoney").innerHTML = money;
-}
-
-function showError(error) {
-  switch(error.code) {
-    case error.PERMISSION_DENIED:
-      money = 0
-      document.getElementById("Nmoney").innerHTML = money;
-    case error.POSITION_UNAVAILABLE:
-      money = 0
-      document.getElementById("Nmoney").innerHTML = money;
-    case error.TIMEOUT:
-      money = 0
-      document.getElementById("Nmoney").innerHTML = money;
-    case error.UNKNOWN_ERROR:
-      money = 0
-      document.getElementById("Nmoney").innerHTML = money;
-  }
-}
-
-      
       var money = 0;
       var fuel = 0;
       var ore = 0;
